@@ -30,7 +30,8 @@ jobs:
         run: |
           gh release download v1.19.34 --repo MetaCubeX/mihomo \
             --pattern "mihomo-linux-amd64-compatible-v1.19.34.gz" --output mh.gz
-          gunzip mh.gz && chmod +x mihomo-linux-amd64-compatible-v1.19.34
+          ls -la mh.gz; file mh.gz
+          gunzip -v mh.gz && chmod +x mihomo-linux-amd64-compatible-v1.19.34
           sudo mv mihomo-linux-amd64-compatible-v1.19.34 /usr/local/bin/mihomo
           mihomo -v
 
