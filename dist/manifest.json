@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-22T16:29:02.584Z",
+  "generatedAt": "2026-11-22T16:37:31.510Z",
   "upstream": {
     "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt",
     "blockLines": 281640,
     "version": "2026.1122.1534.57",
     "modified": "22 Nov 2026 15:34 UTC",
-    "fetchedAt": "2026-11-22T16:28:49.826Z"
+    "fetchedAt": "2026-11-22T16:37:31.068Z"
   },
   "stats": {
     "raw": 281640,
