@@ -1,0 +1,9 @@
+{
+  "hagezi-pro": {
+    "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt",
+    "blockLines": 281640,
+    "version": "2026.1122.1534.57",
+    "modified": "22 Nov 2026 15:34 UTC",
+    "fetchedAt": "2026-11-22T16:28:49.826Z"
+  }
+}

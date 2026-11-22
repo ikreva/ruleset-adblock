@@ -1,0 +1,3 @@
+# 格式：<名称> @ <主链> | <备链>
+# fetch.mjs 依次尝试（每个 URL 重试 3 次），主备均失败则沿用本地旧文件并告警
+hagezi-pro @ https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt | https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt

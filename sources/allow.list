@@ -1,0 +1,12 @@
+# 两用域 / 基础设施域：绝不进入广告名单（build 期剔除）
+# 语义：本行域名及其全部子域（等于或以 . 结尾即命中）
+# 来源：fakeipfilter 仓 connectivity-exclude + 连网检测 + NTP；新增例外直接追加
+gstatic.com
+cp.cloudflare.com
+msftconnecttest.com
+msftncsi.com
+time.apple.com
+time.android.com
+time.windows.com
+ntp.org
+aliyun.com
