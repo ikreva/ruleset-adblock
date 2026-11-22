@@ -26,10 +26,10 @@ jobs:
 
       - name: Install mihomo
         run: |
-          curl -sL -o mh.gz \
-            "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.34/mihomo-linux-amd64-v1.19.34.gz"
-          gunzip mh.gz && chmod +x mihomo-linux-amd64-v1.19.34
-          sudo mv mihomo-linux-amd64-v1.19.34 /usr/local/bin/mihomo
+          curl -sL --fail -o mh.gz \
+            "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.34/mihomo-linux-amd64-compatible-v1.19.34.gz"
+          gunzip mh.gz && chmod +x mihomo-linux-amd64-compatible-v1.19.34
+          sudo mv mihomo-linux-amd64-compatible-v1.19.34 /usr/local/bin/mihomo
           mihomo -v
 
       - uses: oven-sh/setup-bun@v2
