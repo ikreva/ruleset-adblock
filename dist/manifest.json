@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-22T21:09:48.699Z",
+  "generatedAt": "2026-11-22T21:18:38.218Z",
   "allowCount": 9,
   "tiers": {
     "hagezi-light": {
@@ -8,7 +8,7 @@
         "blockLines": 82067,
         "version": "2026.1122.1844.43",
         "modified": "22 Nov 2026 18:44 UTC",
-        "fetchedAt": "2026-11-22T21:09:42.151Z"
+        "fetchedAt": "2026-11-22T21:18:27.584Z"
       },
       "stats": {
         "raw": 82067,
@@ -26,7 +26,7 @@
         "blockLines": 188623,
         "version": "2026.1122.1827.40",
         "modified": "22 Nov 2026 18:27 UTC",
-        "fetchedAt": "2026-11-22T21:09:42.295Z"
+        "fetchedAt": "2026-11-22T21:18:27.621Z"
       },
       "stats": {
         "raw": 188623,
@@ -44,7 +44,7 @@
         "blockLines": 242058,
         "version": "2026.1122.1834.44",
         "modified": "22 Nov 2026 18:34 UTC",
-        "fetchedAt": "2026-11-22T21:09:42.449Z"
+        "fetchedAt": "2026-11-22T21:18:27.696Z"
       },
       "stats": {
         "raw": 242058,
@@ -62,7 +62,7 @@
         "blockLines": 252987,
         "version": "2026.1122.1838.30",
         "modified": "22 Nov 2026 18:38 UTC",
-        "fetchedAt": "2026-11-22T21:09:42.619Z"
+        "fetchedAt": "2026-11-22T21:18:27.744Z"
       },
       "stats": {
         "raw": 252987,
@@ -80,7 +80,7 @@
         "blockLines": 285120,
         "version": "2026.1122.1841.16",
         "modified": "22 Nov 2026 18:41 UTC",
-        "fetchedAt": "2026-11-22T21:09:42.772Z"
+        "fetchedAt": "2026-11-22T21:18:27.804Z"
       },
       "stats": {
         "raw": 285120,
