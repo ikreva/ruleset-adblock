@@ -1,3 +1,9 @@
-# 格式：<名称> @ <主链> | <备链>
+# 格式：<名称> @ <主链> | <备链> # floor=<||行数下限>
 # fetch.mjs 依次尝试（每个 URL 重试 3 次），主备均失败则沿用本地旧文件并告警
-hagezi-pro @ https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt | https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt
+# 档位对应 HaGeZi Multi 系列五档（Normal 档的文件名是 multi.txt，pro++ 是 pro.plus.txt）
+# floor 取各档当前规模的 ~75-84%，作为「上游骤降/错页」的硬下限
+hagezi-light    @ https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/light.txt | https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/light.txt # floor=60000
+hagezi-normal   @ https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/multi.txt | https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/multi.txt # floor=150000
+hagezi-pro      @ https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt | https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt # floor=200000
+hagezi-proplus  @ https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt | https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.plus.txt # floor=210000
+hagezi-ultimate @ https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/ultimate.txt | https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/ultimate.txt # floor=240000
