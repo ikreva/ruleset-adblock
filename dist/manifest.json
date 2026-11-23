@@ -1,94 +1,94 @@
 {
-  "generatedAt": "2026-11-22T21:18:38.218Z",
+  "generatedAt": "2026-11-23T01:17:09.865Z",
   "allowCount": 9,
   "tiers": {
     "hagezi-light": {
       "upstream": {
         "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/light.txt",
-        "blockLines": 82067,
-        "version": "2026.1122.1844.43",
-        "modified": "22 Nov 2026 18:44 UTC",
-        "fetchedAt": "2026-11-22T21:18:27.584Z"
+        "blockLines": 75486,
+        "version": "2026.1122.2326.35",
+        "modified": "22 Nov 2026 23:26 UTC",
+        "fetchedAt": "2026-11-23T01:16:56.182Z"
       },
       "stats": {
-        "raw": 82067,
-        "block": 82067,
+        "raw": 75486,
+        "block": 75486,
         "upstreamAllow": 0,
         "invalid": 0,
         "excluded": 1,
-        "final": 82066
+        "final": 75485
       },
       "floor": 60000
     },
     "hagezi-normal": {
       "upstream": {
         "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/multi.txt",
-        "blockLines": 188623,
-        "version": "2026.1122.1827.40",
-        "modified": "22 Nov 2026 18:27 UTC",
-        "fetchedAt": "2026-11-22T21:18:27.621Z"
+        "blockLines": 177323,
+        "version": "2026.1122.2323.16",
+        "modified": "22 Nov 2026 23:23 UTC",
+        "fetchedAt": "2026-11-23T01:16:56.285Z"
       },
       "stats": {
-        "raw": 188623,
-        "block": 188623,
+        "raw": 177323,
+        "block": 177323,
         "upstreamAllow": 0,
         "invalid": 0,
         "excluded": 3,
-        "final": 188620
+        "final": 177320
       },
       "floor": 150000
     },
     "hagezi-pro": {
       "upstream": {
         "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt",
-        "blockLines": 242058,
-        "version": "2026.1122.1834.44",
-        "modified": "22 Nov 2026 18:34 UTC",
-        "fetchedAt": "2026-11-22T21:18:27.696Z"
+        "blockLines": 234113,
+        "version": "2026.1122.2327.34",
+        "modified": "22 Nov 2026 23:27 UTC",
+        "fetchedAt": "2026-11-23T01:16:56.377Z"
       },
       "stats": {
-        "raw": 242058,
-        "block": 242058,
+        "raw": 234113,
+        "block": 234113,
         "upstreamAllow": 0,
         "invalid": 0,
         "excluded": 4,
-        "final": 242054
+        "final": 234109
       },
       "floor": 200000
     },
     "hagezi-proplus": {
       "upstream": {
         "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt",
-        "blockLines": 252987,
-        "version": "2026.1122.1838.30",
-        "modified": "22 Nov 2026 18:38 UTC",
-        "fetchedAt": "2026-11-22T21:18:27.744Z"
+        "blockLines": 246912,
+        "version": "2026.1122.2334.45",
+        "modified": "22 Nov 2026 23:34 UTC",
+        "fetchedAt": "2026-11-23T01:16:56.459Z"
       },
       "stats": {
-        "raw": 252987,
-        "block": 252987,
+        "raw": 246912,
+        "block": 246912,
         "upstreamAllow": 0,
         "invalid": 0,
         "excluded": 4,
-        "final": 252983
+        "final": 246908
       },
       "floor": 210000
     },
     "hagezi-ultimate": {
       "upstream": {
         "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/ultimate.txt",
-        "blockLines": 285120,
-        "version": "2026.1122.1841.16",
-        "modified": "22 Nov 2026 18:41 UTC",
-        "fetchedAt": "2026-11-22T21:18:27.804Z"
+        "blockLines": 278966,
+        "version": "2026.1122.2337.55",
+        "modified": "22 Nov 2026 23:37 UTC",
+        "fetchedAt": "2026-11-23T01:16:56.550Z"
       },
       "stats": {
-        "raw": 285120,
-        "block": 285120,
+        "raw": 278966,
+        "block": 278966,
         "upstreamAllow": 0,
         "invalid": 0,
         "excluded": 5,
-        "final": 285115
+        "final": 278961
       },
       "floor": 240000
     }
