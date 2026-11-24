@@ -1,37 +1,37 @@
 {
   "hagezi-pro": {
     "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt",
-    "blockLines": 234113,
-    "version": "2026.1122.2327.34",
-    "modified": "22 Nov 2026 23:27 UTC",
-    "fetchedAt": "2026-11-23T01:16:56.377Z"
+    "blockLines": 239389,
+    "version": "2026.1123.2331.28",
+    "modified": "23 Nov 2026 23:31 UTC",
+    "fetchedAt": "2026-11-24T05:05:37.470Z"
   },
   "hagezi-light": {
     "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/light.txt",
-    "blockLines": 75486,
-    "version": "2026.1122.2326.35",
-    "modified": "22 Nov 2026 23:26 UTC",
-    "fetchedAt": "2026-11-23T01:16:56.182Z"
+    "blockLines": 76665,
+    "version": "2026.1123.2330.39",
+    "modified": "23 Nov 2026 23:30 UTC",
+    "fetchedAt": "2026-11-24T05:05:37.368Z"
   },
   "hagezi-normal": {
     "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/multi.txt",
-    "blockLines": 177323,
-    "version": "2026.1122.2323.16",
-    "modified": "22 Nov 2026 23:23 UTC",
-    "fetchedAt": "2026-11-23T01:16:56.285Z"
+    "blockLines": 180356,
+    "version": "2026.1123.2327.17",
+    "modified": "23 Nov 2026 23:27 UTC",
+    "fetchedAt": "2026-11-24T05:05:37.415Z"
   },
   "hagezi-proplus": {
     "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt",
-    "blockLines": 246912,
-    "version": "2026.1122.2334.45",
-    "modified": "22 Nov 2026 23:34 UTC",
-    "fetchedAt": "2026-11-23T01:16:56.459Z"
+    "blockLines": 256511,
+    "version": "2026.1123.2338.08",
+    "modified": "23 Nov 2026 23:38 UTC",
+    "fetchedAt": "2026-11-24T05:05:37.537Z"
   },
   "hagezi-ultimate": {
     "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/ultimate.txt",
-    "blockLines": 278966,
-    "version": "2026.1122.2337.55",
-    "modified": "22 Nov 2026 23:37 UTC",
-    "fetchedAt": "2026-11-23T01:16:56.550Z"
+    "blockLines": 282203,
+    "version": "2026.1123.2341.08",
+    "modified": "23 Nov 2026 23:41 UTC",
+    "fetchedAt": "2026-11-24T05:05:37.600Z"
   }
 }
