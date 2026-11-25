@@ -1,0 +1,3 @@
+dist/.readback.json
+*.tmp
+.DS_Store

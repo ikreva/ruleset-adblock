@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-25T03:53:45.235Z",
-  "allowCount": 9,
+  "generatedAt": "2026-11-25T08:12:17.195Z",
+  "allowCount": 35,
   "tiers": {
     "hagezi-light": {
       "upstream": {
@@ -14,9 +14,11 @@
         "raw": 85415,
         "block": 85415,
         "upstreamAllow": 0,
+        "skippedModifier": 0,
         "invalid": 0,
-        "excluded": 1,
-        "final": 85414
+        "excluded": 0,
+        "pruned": 0,
+        "final": 85415
       },
       "floor": 60000
     },
@@ -32,9 +34,11 @@
         "raw": 191221,
         "block": 191221,
         "upstreamAllow": 0,
+        "skippedModifier": 0,
         "invalid": 0,
-        "excluded": 3,
-        "final": 191218
+        "excluded": 0,
+        "pruned": 0,
+        "final": 191221
       },
       "floor": 150000
     },
@@ -50,9 +54,11 @@
         "raw": 247196,
         "block": 247196,
         "upstreamAllow": 0,
+        "skippedModifier": 0,
         "invalid": 0,
-        "excluded": 4,
-        "final": 247192
+        "excluded": 0,
+        "pruned": 0,
+        "final": 247196
       },
       "floor": 200000
     },
@@ -68,9 +74,11 @@
         "raw": 263172,
         "block": 263172,
         "upstreamAllow": 0,
+        "skippedModifier": 0,
         "invalid": 0,
-        "excluded": 4,
-        "final": 263168
+        "excluded": 1,
+        "pruned": 0,
+        "final": 263171
       },
       "floor": 210000
     },
@@ -86,9 +94,11 @@
         "raw": 291364,
         "block": 291364,
         "upstreamAllow": 0,
+        "skippedModifier": 0,
         "invalid": 0,
-        "excluded": 5,
-        "final": 291359
+        "excluded": 1,
+        "pruned": 0,
+        "final": 291363
       },
       "floor": 240000
     }

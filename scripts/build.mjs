@@ -1,19 +1,27 @@
 #!/usr/bin/env bun
-// build.mjs — 解析 adblock 名单（五档）→ 准入剔除 → 双格式产物（json source / srs / mrs / clash list）
+// build.mjs — 解析 adblock 名单（五档）→ 准入双向剔除 → 后缀剪枝 → 双格式产物（json / srs / mrs / list）
 // 用法：bun scripts/build.mjs  （在仓库根目录执行；需要 PATH 中有 sing-box 与 mihomo，
 //       或用环境变量 SINGBOX_BIN / MIHOMO_BIN 指定二进制）
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 
-const root = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const root = fileURLToPath(new URL("..", import.meta.url));
 const singbox = process.env.SINGBOX_BIN ?? "sing-box";
 const mihomo = process.env.MIHOMO_BIN ?? "mihomo";
 const log = (s) => console.log("[build] " + s);
 const fail = (s) => { console.error("[build][错误] " + s); process.exit(1); };
 
+// 严格域名格式（排除 IPv4/非法字符/单标签）
+const VALID_DOMAIN_RE = /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)+$/;
+const IPV4_RE = /^\d{1,3}(?:\.\d{1,3}){3}$/;
+// 允许视为全域名封锁的 ABP 修饰符（不含条件限定或重写）
+const SAFE_BLOCK_MODIFIERS = new Set(["important", "all"]);
+
 function run(bin, args, label) {
   const r = spawnSync(bin, args, { encoding: "utf8", timeout: 120000 });
+  if (r.error) fail(`${label} 无法启动：${r.error.message}`);
   if (r.status !== 0) fail(`${label} 失败（退出码 ${r.status}）：${(r.stderr || r.stdout || "").slice(0, 500)}`);
   return r;
 }
@@ -21,25 +29,62 @@ function run(bin, args, label) {
 // 档位清单与规模下限来自 sources/upstream.txt（与 fetch.mjs 同一解析规则）
 function parseUpstream(text) {
   const lists = [];
-  for (const raw of text.split("\n")) {
+  for (const raw of text.split(/\r?\n/)) {
     const line = raw.trim();
     if (!line || line.startsWith("#")) continue;
     const m = line.match(/^(\S+)\s+@\s+(\S+)(?:\s+\|\s+(\S+))?(?:\s+#\s*floor=(\d+))?$/);
     if (!m) fail(`upstream.txt 行无法解析：${line}`);
+    if (!m[4]) fail(`upstream.txt 条目 ${m[1]} 缺少 floor=N 下限声明`);
     lists.push({ name: m[1], floor: Number(m[4]) });
   }
+  if (!lists.length) fail("upstream.txt 无有效条目");
   return lists;
 }
-const tiers = parseUpstream(readFileSync(join(root, "sources", "upstream.txt"), "utf8"));
 
 function loadAllow(file) {
   if (!existsSync(file)) return [];
-  return readFileSync(file, "utf8").split("\n").map(l => l.trim().toLowerCase())
-    .filter(l => l && !l.startsWith("#"));
+  const entries = readFileSync(file, "utf8")
+    .split(/\r?\n/)
+    .map(l => l.split("#", 1)[0].trim().toLowerCase())
+    .filter(Boolean);
+  return [...new Set(entries)];
 }
-const isAllowed = (d, allow) => allow.some(a => d === a || d.endsWith("." + a));
 
-// allow.list 是全局误杀防线：两用域在任何档位都不允许出现
+function parseAbpDomain(body) {
+  let d = body.toLowerCase();
+  if (d.endsWith("^")) d = d.slice(0, -1);
+  if (!d || IPV4_RE.test(d) || !VALID_DOMAIN_RE.test(d)) return null;
+  return d;
+}
+
+// 双向校验：剔除 allow 自身及其子域，同时阻断任何会误杀 allow 条目的父域
+function allowConflict(domain, allow) {
+  for (const a of allow) {
+    if (domain === a || domain.endsWith("." + a)) return { type: "sub", target: a };
+    if (a.endsWith("." + domain)) return { type: "ancestor", target: a };
+  }
+  return null;
+}
+
+// O(N * labels) 后缀包含剪枝：若父后缀已在集合中，移除冗余子后缀
+function pruneRedundantSuffixes(set) {
+  let pruned = 0;
+  for (const d of [...set]) {
+    let idx = d.indexOf(".");
+    while (idx !== -1) {
+      const parent = d.slice(idx + 1);
+      if (set.has(parent)) {
+        set.delete(d);
+        pruned++;
+        break;
+      }
+      idx = d.indexOf(".", idx + 1);
+    }
+  }
+  return pruned;
+}
+
+const tiers = parseUpstream(readFileSync(join(root, "sources", "upstream.txt"), "utf8"));
 const allow = loadAllow(join(root, "sources", "allow.list"));
 const meta = existsSync(join(root, "upstream", "meta.json"))
   ? JSON.parse(readFileSync(join(root, "upstream", "meta.json"), "utf8")) : {};
@@ -49,30 +94,87 @@ mkdirSync(dist, { recursive: true });
 const manifestTiers = {};
 
 for (const { name, floor } of tiers) {
-  const stats = { raw: 0, block: 0, upstreamAllow: 0, invalid: 0, excluded: 0, final: 0 };
+  const stats = {
+    raw: 0,
+    block: 0,
+    upstreamAllow: 0,
+    skippedModifier: 0,
+    invalid: 0,
+    excluded: 0,
+    pruned: 0,
+    final: 0,
+  };
   const block = new Set();
+  const upstreamAllow = new Set();
+  const badfilters = new Set();
+
   const text = readFileSync(join(root, "upstream", `${name}.txt`), "utf8");
-  for (const raw of text.split("\n")) {
+  for (const raw of text.split(/\r?\n/)) {
     const line = raw.trim();
     if (!line || line.startsWith("!") || line.startsWith("[Adblock")) continue;
-    if (line.startsWith("@@")) { stats.upstreamAllow++; continue; } // 上游自带放行
+
+    // 上游自带放行规则 @@||domain^
+    if (line.startsWith("@@")) {
+      stats.upstreamAllow++;
+      if (line.startsWith("@@||")) {
+        const rest = line.slice(4).split("$", 1)[0];
+        const d = parseAbpDomain(rest);
+        if (d) upstreamAllow.add(d);
+      }
+      continue;
+    }
+
     if (!line.startsWith("||")) { stats.invalid++; continue; }
     stats.raw++;
-    let d = line.slice(2);
-    const dollar = d.indexOf("$");
-    if (dollar !== -1) d = d.slice(0, dollar);       // 去修饰符（$all/$dnsrewrite 等）
-    if (d.endsWith("^")) d = d.slice(0, -1);
-    d = d.toLowerCase();
-    if (!d || d.includes("/") || d.includes("*") || d.includes("=") || !d.includes(".")) { stats.invalid++; continue; }
+
+    const rest = line.slice(2);
+    const dollar = rest.indexOf("$");
+    let body = rest;
+    if (dollar !== -1) {
+      body = rest.slice(0, dollar);
+      const mods = rest.slice(dollar + 1).toLowerCase().split(",").map(s => s.trim()).filter(Boolean);
+      if (mods.includes("badfilter")) {
+        const d = parseAbpDomain(body);
+        if (d) badfilters.add(d);
+        stats.skippedModifier++;
+        continue;
+      }
+      if (!mods.every(m => SAFE_BLOCK_MODIFIERS.has(m))) {
+        stats.skippedModifier++;
+        continue;
+      }
+    }
+
+    const d = parseAbpDomain(body);
+    if (!d) { stats.invalid++; continue; }
     stats.block++;
     block.add(d);
   }
 
-  // ---------- 剔除（allow.list：等于或子域） ----------
-  for (const d of [...block]) if (isAllowed(d, allow)) { block.delete(d); stats.excluded++; }
+  // 扣除上游 @@ 放行与 $badfilter 撤销条目
+  for (const d of badfilters) block.delete(d);
+  for (const d of upstreamAllow) block.delete(d);
+
+  // ---------- 双向剔除（allow.list：子域 + 误杀父域） ----------
+  for (const d of [...block]) {
+    const conflict = allowConflict(d, allow);
+    if (conflict) {
+      if (conflict.type === "ancestor") {
+        log(`⚠ ${name} 剔除误杀父域 ${d}（会覆盖 allow.list 中的 ${conflict.target}）`);
+      }
+      block.delete(d);
+      stats.excluded++;
+    }
+  }
+
+  // ---------- 后缀包含剪枝 ----------
+  stats.pruned = pruneRedundantSuffixes(block);
+
   const sorted = [...block].sort();
   stats.final = sorted.length;
-  log(`${name} 解析完成：原始 ${stats.block} 条 → 剔除两用域 ${stats.excluded} → 最终 ${stats.final} 条`);
+  log(
+    `${name} 解析完成：原始 ${stats.block} 条 → 剔除两用域 ${stats.excluded} → 后缀剪枝 ${stats.pruned} → 最终 ${stats.final} 条`
+  );
   if (stats.final < floor) fail(`${name} 最终条数 ${stats.final} 低于规模阈值 ${floor}，中止发布`);
   if (!sorted.length) fail(`${name} 产出为空`);
 
@@ -81,7 +183,7 @@ for (const { name, floor } of tiers) {
   const source = { version: 3, rules: [{ domain_suffix: sorted }] };
   writeFileSync(join(dist, `${name}.json`), JSON.stringify(source) + "\n");
 
-  // mihomo payload（+.d）与 clash list（同一份）
+  // mihomo domain text（+.d 行，behavior: domain, format: text）
   const payload = sorted.map(d => "+." + d).join("\n") + "\n";
   writeFileSync(join(dist, `${name}.list`), payload);
 
@@ -94,11 +196,18 @@ for (const { name, floor } of tiers) {
   run(mihomo, ["convert-ruleset", "domain", "text", join(dist, `${name}.list`), join(dist, `${name}.mrs`)], `mihomo convert-ruleset ${name}`);
 }
 
-// manifest（含各档上游版本、统计与规模下限）
-writeFileSync(join(dist, "manifest.json"), JSON.stringify({
-  generatedAt: new Date().toISOString(),
+// manifest 幂等写入：若 allowCount 与 tiers 均未变化则沿用旧 generatedAt，避免无意义 git diff
+const manifestPath = join(dist, "manifest.json");
+const prevManifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, "utf8")) : null;
+const unchanged = prevManifest
+  && prevManifest.allowCount === allow.length
+  && JSON.stringify(prevManifest.tiers) === JSON.stringify(manifestTiers);
+
+const nextManifest = {
+  generatedAt: unchanged ? prevManifest.generatedAt : new Date().toISOString(),
   allowCount: allow.length,
   tiers: manifestTiers,
-}, null, 2) + "\n");
+};
+writeFileSync(manifestPath, JSON.stringify(nextManifest, null, 2) + "\n");
 
 log(`build 阶段完成：${tiers.map(t => t.name).join(" / ")} 的 {json,srs,mrs,list} + manifest.json`);

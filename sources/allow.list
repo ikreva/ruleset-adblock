@@ -1,12 +1,44 @@
-# 两用域 / 基础设施域：绝不进入广告名单（build 期剔除）
-# 语义：本行域名及其全部子域（等于或以 . 结尾即命中）
-# 来源：fakeipfilter 仓 connectivity-exclude + 连网检测 + NTP；新增例外直接追加
+# 两用域 / 基础设施域：绝不进入广告名单（build 期双向剔除：含其子域与父域）
+# 边界：仅收全球/系统级基础设施与两用域（连网检测、NTP、公共 DoH 防自杀），
+#       不削弱 HaGeZi 对普通广告/运营商一键登录 SDK 等条目的判定（个人按需在客户端 allow-list 放行）。
+#
+# ---- 连网检测 / Captive Portal ----
 gstatic.com
+connectivitycheck.android.com
+captive.apple.com
 cp.cloudflare.com
+detectportal.firefox.com
 msftconnecttest.com
 msftncsi.com
+connect.rom.miui.com
+connectivitycheck.platform.hicloud.com
+conn1.oppomobile.com
+conn2.oppomobile.com
+networkcheck.kde.org
+nmcheck.gnome.org
+#
+# ---- NTP 校时 ----
 time.apple.com
 time.android.com
 time.windows.com
+time.cloudflare.com
+time.google.com
 ntp.org
-aliyun.com
+ntp.aliyun.com
+ntp1.aliyun.com
+ntp2.aliyun.com
+ntp3.aliyun.com
+ntp4.aliyun.com
+ntp5.aliyun.com
+ntp6.aliyun.com
+ntp7.aliyun.com
+ntp.tencent.com
+#
+# ---- 公共加密 DNS（防止阻断代理自用 DoH/DoT 导致自杀）----
+dns.google
+cloudflare-dns.com
+one.one.one.one
+dns.quad9.net
+doh.pub
+dns.alidns.com
+doh.360.cn
