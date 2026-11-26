@@ -1,104 +1,109 @@
 {
-  "generatedAt": "2026-11-25T08:12:17.195Z",
+  "generatedAt": "2026-11-26T03:19:51.755Z",
   "allowCount": 35,
   "tiers": {
     "hagezi-light": {
       "upstream": {
         "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/light.txt",
-        "blockLines": 85415,
-        "version": "2026.1124.2320.06",
-        "modified": "24 Nov 2026 23:20 UTC",
-        "fetchedAt": "2026-11-25T03:53:31.347Z"
+        "blockLines": 84559,
+        "version": "2026.1125.2323.27",
+        "modified": "25 Nov 2026 23:23 UTC",
+        "sha256": "dd02362361b24bd4",
+        "fetchedAt": "2026-11-26T03:19:36.049Z"
       },
       "stats": {
-        "raw": 85415,
-        "block": 85415,
+        "raw": 84559,
+        "block": 84559,
         "upstreamAllow": 0,
         "skippedModifier": 0,
         "invalid": 0,
         "excluded": 0,
         "pruned": 0,
-        "final": 85415
+        "final": 84559
       },
       "floor": 60000
     },
     "hagezi-normal": {
       "upstream": {
         "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/multi.txt",
-        "blockLines": 191221,
-        "version": "2026.1124.2317.11",
-        "modified": "24 Nov 2026 23:17 UTC",
-        "fetchedAt": "2026-11-25T03:53:31.392Z"
+        "blockLines": 184283,
+        "version": "2026.1125.2320.59",
+        "modified": "25 Nov 2026 23:20 UTC",
+        "sha256": "7edbeab7bb7bb2bd",
+        "fetchedAt": "2026-11-26T03:19:36.109Z"
       },
       "stats": {
-        "raw": 191221,
-        "block": 191221,
+        "raw": 184283,
+        "block": 184283,
         "upstreamAllow": 0,
         "skippedModifier": 0,
         "invalid": 0,
         "excluded": 0,
         "pruned": 0,
-        "final": 191221
+        "final": 184283
       },
       "floor": 150000
     },
     "hagezi-pro": {
       "upstream": {
         "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt",
-        "blockLines": 247196,
-        "version": "2026.1124.2321.00",
-        "modified": "24 Nov 2026 23:21 UTC",
-        "fetchedAt": "2026-11-25T03:53:31.457Z"
+        "blockLines": 241191,
+        "version": "2026.1125.2324.18",
+        "modified": "25 Nov 2026 23:24 UTC",
+        "sha256": "19142fd606a4608e",
+        "fetchedAt": "2026-11-26T03:19:36.190Z"
       },
       "stats": {
-        "raw": 247196,
-        "block": 247196,
+        "raw": 241191,
+        "block": 241191,
         "upstreamAllow": 0,
         "skippedModifier": 0,
         "invalid": 0,
         "excluded": 0,
         "pruned": 0,
-        "final": 247196
+        "final": 241191
       },
       "floor": 200000
     },
     "hagezi-proplus": {
       "upstream": {
         "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt",
-        "blockLines": 263172,
-        "version": "2026.1124.2326.55",
-        "modified": "24 Nov 2026 23:26 UTC",
-        "fetchedAt": "2026-11-25T03:53:31.513Z"
+        "blockLines": 262041,
+        "version": "2026.1125.2331.10",
+        "modified": "25 Nov 2026 23:31 UTC",
+        "sha256": "e0192c38d5376697",
+        "fetchedAt": "2026-11-26T03:19:36.269Z"
       },
       "stats": {
-        "raw": 263172,
-        "block": 263172,
+        "raw": 262041,
+        "block": 262041,
         "upstreamAllow": 0,
         "skippedModifier": 0,
         "invalid": 0,
         "excluded": 1,
         "pruned": 0,
-        "final": 263171
+        "final": 262040
       },
       "floor": 210000
     },
     "hagezi-ultimate": {
       "upstream": {
         "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/ultimate.txt",
-        "blockLines": 291364,
-        "version": "2026.1124.2330.24",
-        "modified": "24 Nov 2026 23:30 UTC",
-        "fetchedAt": "2026-11-25T03:53:31.570Z"
+        "blockLines": 288866,
+        "version": "2026.1125.2334.33",
+        "modified": "25 Nov 2026 23:34 UTC",
+        "sha256": "ff7cc3405113435d",
+        "fetchedAt": "2026-11-26T03:19:36.347Z"
       },
       "stats": {
-        "raw": 291364,
-        "block": 291364,
+        "raw": 288866,
+        "block": 288866,
         "upstreamAllow": 0,
         "skippedModifier": 0,
         "invalid": 0,
         "excluded": 1,
         "pruned": 0,
-        "final": 291363
+        "final": 288865
       },
       "floor": 240000
     }
