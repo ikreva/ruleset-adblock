@@ -1,42 +1,42 @@
 {
   "hagezi-pro": {
     "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt",
-    "blockLines": 241191,
-    "version": "2026.1125.2324.18",
-    "modified": "25 Nov 2026 23:24 UTC",
-    "sha256": "19142fd606a4608e",
-    "fetchedAt": "2026-11-26T03:19:36.190Z"
+    "blockLines": 242659,
+    "version": "2026.1126.2325.19",
+    "modified": "26 Nov 2026 23:25 UTC",
+    "sha256": "3e6848a7f0e75d6b",
+    "fetchedAt": "2026-11-27T03:24:30.804Z"
   },
   "hagezi-light": {
     "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/light.txt",
-    "blockLines": 84559,
-    "version": "2026.1125.2323.27",
-    "modified": "25 Nov 2026 23:23 UTC",
-    "sha256": "dd02362361b24bd4",
-    "fetchedAt": "2026-11-26T03:19:36.049Z"
+    "blockLines": 81810,
+    "version": "2026.1126.2324.28",
+    "modified": "26 Nov 2026 23:24 UTC",
+    "sha256": "09b436bd6ad16387",
+    "fetchedAt": "2026-11-27T03:24:30.701Z"
   },
   "hagezi-normal": {
     "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/multi.txt",
-    "blockLines": 184283,
-    "version": "2026.1125.2320.59",
-    "modified": "25 Nov 2026 23:20 UTC",
-    "sha256": "7edbeab7bb7bb2bd",
-    "fetchedAt": "2026-11-26T03:19:36.109Z"
+    "blockLines": 184355,
+    "version": "2026.1126.2321.57",
+    "modified": "26 Nov 2026 23:21 UTC",
+    "sha256": "580261a2401c46db",
+    "fetchedAt": "2026-11-27T03:24:30.749Z"
   },
   "hagezi-proplus": {
     "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt",
-    "blockLines": 262041,
-    "version": "2026.1125.2331.10",
-    "modified": "25 Nov 2026 23:31 UTC",
-    "sha256": "e0192c38d5376697",
-    "fetchedAt": "2026-11-26T03:19:36.269Z"
+    "blockLines": 258276,
+    "version": "2026.1126.2334.40",
+    "modified": "26 Nov 2026 23:34 UTC",
+    "sha256": "69c62540081ba9c0",
+    "fetchedAt": "2026-11-27T03:24:30.862Z"
   },
   "hagezi-ultimate": {
     "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/ultimate.txt",
-    "blockLines": 288866,
-    "version": "2026.1125.2334.33",
-    "modified": "25 Nov 2026 23:34 UTC",
-    "sha256": "ff7cc3405113435d",
-    "fetchedAt": "2026-11-26T03:19:36.347Z"
+    "blockLines": 291821,
+    "version": "2026.1126.2338.04",
+    "modified": "26 Nov 2026 23:38 UTC",
+    "sha256": "ad7cd9655a8186e5",
+    "fetchedAt": "2026-11-27T03:24:30.916Z"
   }
 }
