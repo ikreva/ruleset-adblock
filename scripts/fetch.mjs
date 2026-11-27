@@ -11,11 +11,13 @@ const upstreamFile = join(root, "sources", "upstream.txt");
 const outDir = join(root, "upstream");
 const metaFile = join(outDir, "meta.json");
 const FRESH_RATIO = 0.95;      // 新鲜度：较上次 <95% 告警
+const STALE_DAYS = 5;          // 连续拉取失败距上次成功超过该天数时红灯终止
 const RETRIES = 3;
 
 const log = (s) => console.log("[fetch] " + s);
 const fail = (s) => { console.error("[fetch][错误] " + s); process.exit(1); };
 const sha256Short = (s) => createHash("sha256").update(s).digest("hex").slice(0, 16);
+const daysSince = (iso) => (iso ? (Date.now() - Date.parse(iso)) / 86400000 : 0);
 
 // 行格式：<名称> @ <主链> [| <备链>] [# floor=N]；floor 必填（每档规模差异大，不允许缺省）
 function parseUpstream(text) {
@@ -54,6 +56,7 @@ const lists = parseUpstream(readFileSync(upstreamFile, "utf8"));
 const meta = existsSync(metaFile) ? JSON.parse(readFileSync(metaFile, "utf8")) : {};
 mkdirSync(outDir, { recursive: true });
 let metaChanged = false;
+const staleFailures = [];
 
 for (const { name, urls, floor } of lists) {
   log(`拉取 ${name}：${urls[0]}`);
@@ -66,6 +69,13 @@ for (const { name, urls, floor } of lists) {
   const dest = join(outDir, `${name}.txt`);
   if (!got) {
     if (existsSync(dest)) {
+      const stale = daysSince(meta[name]?.fetchedAt);
+      if (stale >= STALE_DAYS) {
+        const msg = `${name} 上游拉取失败且缓存已过期 ${stale.toFixed(1)} 天（上限 ${STALE_DAYS} 天）`;
+        console.log(`::error::${msg}`);
+        staleFailures.push(msg);
+        continue;
+      }
       log(`⚠ 主备均失败，沿用本地旧文件继续构建：${errors.join("; ")}`);
       console.log(`::warning::${name} 上游全部失败，沿用本地缓存`);
       continue;
@@ -102,5 +112,8 @@ for (const { name, urls, floor } of lists) {
 
 if (metaChanged || !existsSync(metaFile)) {
   writeFileSync(metaFile, JSON.stringify(meta, null, 2) + "\n");
+}
+if (staleFailures.length) {
+  fail(`存在过期缓存红灯：${staleFailures.join("; ")}`);
 }
 log("fetch 阶段完成");

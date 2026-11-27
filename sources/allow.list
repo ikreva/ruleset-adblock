@@ -14,6 +14,9 @@ connect.rom.miui.com
 connectivitycheck.platform.hicloud.com
 conn1.oppomobile.com
 conn2.oppomobile.com
+connectivity.samsung.com.cn
+wifi.vivo.com.cn
+www.qualcomm.cn
 networkcheck.kde.org
 nmcheck.gnome.org
 #
@@ -24,6 +27,8 @@ time.windows.com
 time.cloudflare.com
 time.google.com
 ntp.org
+ntp.ntsc.ac.cn
+time.edu.cn
 ntp.aliyun.com
 ntp1.aliyun.com
 ntp2.aliyun.com
@@ -33,12 +38,20 @@ ntp5.aliyun.com
 ntp6.aliyun.com
 ntp7.aliyun.com
 ntp.tencent.com
+ntp1.tencent.com
+ntp2.tencent.com
+ntp3.tencent.com
+ntp4.tencent.com
+ntp5.tencent.com
+time1.cloud.tencent.com
 #
 # ---- 公共加密 DNS（防止阻断代理自用 DoH/DoT 导致自杀）----
 dns.google
 cloudflare-dns.com
 one.one.one.one
 dns.quad9.net
+dns.adguard-dns.com
+doh.dns.sb
 doh.pub
 dns.alidns.com
 doh.360.cn

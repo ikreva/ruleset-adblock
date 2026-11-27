@@ -113,13 +113,23 @@ for (const { name, floor } of tiers) {
     const line = raw.trim();
     if (!line || line.startsWith("!") || line.startsWith("[Adblock")) continue;
 
-    // 上游自带放行规则 @@||domain^
+    // 上游自带放行规则 @@||domain^（仅处理无条件或安全修饰符的全局放行）
     if (line.startsWith("@@")) {
       stats.upstreamAllow++;
       if (line.startsWith("@@||")) {
-        const rest = line.slice(4).split("$", 1)[0];
-        const d = parseAbpDomain(rest);
-        if (d) upstreamAllow.add(d);
+        const rest = line.slice(4);
+        const dollar = rest.indexOf("$");
+        let body = rest;
+        let safe = true;
+        if (dollar !== -1) {
+          body = rest.slice(0, dollar);
+          const mods = rest.slice(dollar + 1).toLowerCase().split(",").map(s => s.trim()).filter(Boolean);
+          safe = mods.every(m => SAFE_BLOCK_MODIFIERS.has(m));
+        }
+        if (safe) {
+          const d = parseAbpDomain(body);
+          if (d) upstreamAllow.add(d);
+        }
       }
       continue;
     }
@@ -151,9 +161,14 @@ for (const { name, floor } of tiers) {
     block.add(d);
   }
 
-  // 扣除上游 @@ 放行与 $badfilter 撤销条目
+  // 扣除上游 $badfilter 撤销条目与 @@ 放行（双向剔除子域与覆盖它的父域）
   for (const d of badfilters) block.delete(d);
-  for (const d of upstreamAllow) block.delete(d);
+  if (upstreamAllow.size) {
+    const upAllowArr = [...upstreamAllow];
+    for (const d of [...block]) {
+      if (allowConflict(d, upAllowArr)) block.delete(d);
+    }
+  }
 
   // ---------- 双向剔除（allow.list：子域 + 误杀父域） ----------
   for (const d of [...block]) {
